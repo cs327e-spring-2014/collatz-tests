@@ -143,12 +143,6 @@ class TestCollatz (unittest.TestCase) :
        collatz_print(w, 1, 1, 1)
        self.assert_(w.getvalue() == "1 1 1\n")
 
-    # fail case
-    def test_print_fail (self):
-       w = StringIO.StringIO()
-       collatz_print(w, 1, 10)
-       self.assert_(w.getvalue() == "1 10\n")
-
     # -----
     # solve
     # -----
