@@ -67,6 +67,14 @@ class TestCollatz (unittest.TestCase) :
         self.assertTrue(i ==  1)
         self.assertTrue(j == 10)
 
+    def test_read_flipped_order(self) :
+        r = io.StringIO(unicode("10 1"))
+        a = [0, 0]
+        b = collatz_read(r, a)
+        i, j = a
+        self.assertTrue(b == True)
+        self.assertTrue(i ==  10)
+        self.assertTrue(j == 1)
 
     # ----
     # eval
@@ -87,6 +95,13 @@ class TestCollatz (unittest.TestCase) :
     def test_eval_4 (self) :
         v = collatz_eval(900, 1000)
         self.assertTrue(v == 174)
+
+    def test_eval_1num (self):
+        v = collatz_eval(1,1)
+        self.assertTrue(v==1)
+    def test_eval_max(self):
+        v = collatz_eval(1, 1000000)
+        self.assertTrue(v == 525)
 
     # -----
     # print
