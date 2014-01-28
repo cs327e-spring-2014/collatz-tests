@@ -20,7 +20,7 @@ To test the program:
 import io
 import unittest
 
-from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve
+from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve, collatz_eval_helper, collatz_eval_startLength
 
 # -----------
 # TestCollatz 
@@ -142,6 +142,42 @@ class TestCollatz (unittest.TestCase) :
         v = collatz_eval(99, 100)
         self.assertTrue(v == 26)
 
+    # -----
+    # eval_helper
+    # -----
+
+    def test_eval_startLength1 (self) :
+        #Corner test for test_eval_helper
+        v = collatz_eval_startLength(1,20)
+        self.assertTrue(v == 10)
+
+    def test_eval_startLength2 (self) :
+        #Corner test for test_eval_helper
+        v = collatz_eval_startLength(3,6)
+        self.assertTrue(v == 3)
+
+    def test_eval_startLength3 (self) :
+        #Corner test for test_eval_helper
+        v = collatz_eval_startLength(100, 900)
+        self.assertTrue(v == 450)
+    # -----
+    # eval_helper
+    # -----
+
+    def test_eval_helper1 (self) :
+        #Corner test for test_eval_helper
+        v = collatz_eval_helper(1,10)
+        self.assertTrue(v == 20)
+
+    def test_eval_helper2 (self) :
+        #Corner test for test_eval_helper
+        v = collatz_eval_helper(100,200)
+        self.assertTrue(v == 125)
+
+    def test_eval_helper3 (self) :
+        #Corner test for test_eval_helper
+        v = collatz_eval_helper(201, 210)
+        self.assertTrue(v == 89)
 
     # -----
     # print
@@ -152,28 +188,24 @@ class TestCollatz (unittest.TestCase) :
         w = io.StringIO()
         collatz_print(w, 1, 10, 20)
         self.assertTrue(w.getvalue() == "1 10 20\n")
-        print(w.getvalue())
 
     def test_print_2 (self) :
         #Original test_print given
         w = io.StringIO()
         collatz_print(w, 100, 200, 125)
         self.assertTrue(w.getvalue() == "100 200 125\n")
-        print(w.getvalue())
 
     def test_print_3 (self) :
         #Original test_print given
         w = io.StringIO()
         collatz_print(w, 201, 210, 89)
         self.assertTrue(w.getvalue() == "201 210 89\n")
-        print(w.getvalue())
         
     def test_print_4 (self) :
         #Original test_print given
         w = io.StringIO()
         collatz_print(w, 900, 1000, 174)
         self.assertTrue(w.getvalue() == "900 1000 174\n")
-        print(w.getvalue())
 
     def test_print_5 (self) : 
         #Corner test 1 for test_print
@@ -181,14 +213,12 @@ class TestCollatz (unittest.TestCase) :
         w = io.StringIO()
         collatz_print(w, 999999, 1, 525)
         self.assertTrue(w.getvalue() == "999999 1 525\n")
-        print(w.getvalue())
 
     def test_print_6 (self) : 
         #Corner test 2 for test_print
         
         w = io.StringIO()
         collatz_print(w, 1, 2, 2)
-        print(w.getvalue())
         self.assertTrue(w.getvalue() == "1 2 2\n")
 
     def test_print_7 (self) : 
@@ -196,7 +226,6 @@ class TestCollatz (unittest.TestCase) :
         
         w = io.StringIO()
         collatz_print(w, 99, 100, 26)
-        print(w.getvalue())
         self.assertTrue(w.getvalue() == "99 100 26\n")
     
 
