@@ -171,7 +171,19 @@ class TestCollatz (unittest.TestCase) :
     # solve
     # -----
 
-    def test_solve (self) :
+    def test_solve_1 (self) :
+        r = io.StringIO("1 10\n100 200\n201 210\n900 1000\n")
+        w = io.StringIO()
+        collatz_solve(r, w)
+        self.assertTrue(w.getvalue() == "1 10 20\n100 200 125\n201 210 89\n900 1000 174\n")
+
+    def test_solve_2 (self) :
+        r = io.StringIO("1 10\n100 200\n201 210\n900 1000\n10 1\n")
+        w = io.StringIO()
+        collatz_solve(r, w)
+        self.assertTrue(w.getvalue() == "1 10 20\n100 200 125\n201 210 89\n900 1000 174\n10 1 20\n")
+
+    def test_solve_3 (self) :
         r = io.StringIO("1 10\n100 200\n201 210\n900 1000\n10 1\n1 1\n")
         w = io.StringIO()
         collatz_solve(r, w)
