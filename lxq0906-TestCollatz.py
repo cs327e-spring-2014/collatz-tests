@@ -25,7 +25,7 @@ from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve
 
 # ----------------------
 # TestCollatz
-# 19 unit tests in total
+# 23 unit tests in total
 # ----------------------
 
 class TestCollatz (unittest.TestCase) :
@@ -61,7 +61,7 @@ class TestCollatz (unittest.TestCase) :
         self.assertTrue(j == 1000)
         
     def test_read_4 (self) :
-        r = io.StringIO("1000 900\n")
+        r = io.StringIO("1000 900\n")   
         a = [0, 0]
         b = collatz_read(r, a)
         i, j = a
@@ -70,7 +70,7 @@ class TestCollatz (unittest.TestCase) :
         self.assertTrue(j == 900)
 
     # ---------------------------------------
-    # collatz_eval fuction test, 4 in total
+    # collatz_eval fuction test, 7 in total
     # ---------------------------------------
 
     def test_eval_1 (self) :
@@ -88,6 +88,18 @@ class TestCollatz (unittest.TestCase) :
     def test_eval_4 (self) :
         v = collatz_eval(900, 1000)
         self.assertTrue(v == 174)
+      
+    def test_eval_5(self):
+        v = collatz_eval(1, 1000000)     #full range    
+        self.assertTrue(v == 525)
+       	
+    def test_eval_6(self):
+        v = collatz_eval(1000, 900)      #reverse order
+        self.assertTrue(v == 174)
+     
+    def test_eval_7(self):
+        v = collatz_eval(1, 1)
+        self.assertTrue(v == 1)          #same number
 
 
     # --------------------------------------
@@ -130,7 +142,7 @@ class TestCollatz (unittest.TestCase) :
         print(w.getvalue())
         self.assertTrue(w.getvalue() == "1 1000000 525\n")
 
-    def test_print_7 (self) :  # test when i > j
+    def test_print_7 (self) :  # reverse order
         w = io.StringIO()
         collatz_print(w, 1000, 900, 174)
         print(w.getvalue())
