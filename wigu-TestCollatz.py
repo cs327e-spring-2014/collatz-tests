@@ -1,3 +1,8 @@
+# Name: William Gunn
+# ID: weg375
+# Date Created: 21 Jan 2013
+# Date Last Modified: 28 Jan 2013
+
 #!/usr/bin/env python3
 
 # -------------------------------
@@ -20,7 +25,7 @@ To test the program:
 import io
 import unittest
 
-from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve
+from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve, second_opt
 
 # -----------
 # TestCollatz
@@ -32,50 +37,30 @@ class TestCollatz (unittest.TestCase) :
     # ----
 
     def test_read (self) :
-        r = io.StringIO(unicode("1 10\n"))
+        r = io.StringIO("1 10\n")
         a = [0, 0]
         b = collatz_read(r, a)
         i, j = a
         self.assertTrue(b == True)
         self.assertTrue(i ==  1)
         self.assertTrue(j == 10)
-
-    def test_read_no_newline (self) :
-        r = io.StringIO(unicode("1 10"))
-        a = [0, 0]
-        b = collatz_read(r, a)
-        i, j = a
-        self.assertTrue(b == True)
-        self.assertTrue(i ==  1)
-        self.assertTrue(j == 10)
-
-    def test_read_extra_space(self) :
-        r = io.StringIO(unicode(" 1  10  "))
-        a = [0, 0]
-        b = collatz_read(r, a)
-        i, j = a
-        self.assertTrue(b == True)
-        self.assertTrue(i ==  1)
-        self.assertTrue(j == 10)
-
-    def test_read_extra_nums(self) :
-        r = io.StringIO(unicode("1 10 30 80"))
-        a = [0, 0]
-        b = collatz_read(r, a)
-        i, j = a
-        self.assertTrue(b == True)
-        self.assertTrue(i ==  1)
-        self.assertTrue(j == 10)
-
-    def test_read_flipped_order(self) :
-        r = io.StringIO(unicode("10 1"))
-        a = [0, 0]
-        b = collatz_read(r, a)
-        i, j = a
-        self.assertTrue(b == True)
-        self.assertTrue(i ==  10)
-        self.assertTrue(j == 1)
-
+    
+    # -------------------
+    # second optimization
+    # -------------------
+    
+    def test_second_opt_1 (self):
+        v = second_opt(1, 10)
+        self.assertTrue(v == 5)
+        
+    def test_second_opt_2 (self):
+        v = second_opt(1, 100)
+        self.assertTrue(v == 50)
+        
+    def test_second_opt_3 (self):
+        v = second_opt(70, 100)
+        self.assertTrue(v == 70)
+            
     # ----
     # eval
     # ----
@@ -95,13 +80,16 @@ class TestCollatz (unittest.TestCase) :
     def test_eval_4 (self) :
         v = collatz_eval(900, 1000)
         self.assertTrue(v == 174)
+    # Added Tests
+    def test_bckward (self) :
+        v = collatz_eval(10, 1)
+        self.assertTrue(v == 20)
+		
+    def test_corner_1 (self) :
+        v = collatz_eval(1, 1)
+        self.assertTrue(v == 1)
 
-    def test_eval_1num (self):
-        v = collatz_eval(1,1)
-        self.assertTrue(v==1)
-    def test_eval_max(self):
-        v = collatz_eval(1, 1000000)
-        self.assertTrue(v == 525)
+		
 
     # -----
     # print
@@ -117,7 +105,7 @@ class TestCollatz (unittest.TestCase) :
     # -----
 
     def test_solve (self) :
-        r = io.StringIO(unicode("1 10\n100 200\n201 210\n900 1000\n"))
+        r = io.StringIO("1 10\n100 200\n201 210\n900 1000\n")
         w = io.StringIO()
         collatz_solve(r, w)
         self.assertTrue(w.getvalue() == "1 10 20\n100 200 125\n201 210 89\n900 1000 174\n")
