@@ -160,20 +160,6 @@ class TestCollatz (unittest.TestCase) :
        collatz_solve(r, w)
        self.assert_(w.getvalue() == "1 1 1\n1 999999 525\n")
 
-    # test non-positive case
-    def test_solve_zero(self):
-       r = StringIO.StringIO("-1 1\n0 10\n")
-       w = StringIO.StringIO()
-       collatz_solve(r, w)
-       self.assert_(w.getvalue() == False)
-
-    # test string case
-    def test_solve_string(self):
-       r = StringIO.StringIO("Hi World\n")
-       w = StringIO.StringIO()
-       collatz_solve(r, w)
-       self.assert_(w.getvalue() == False)
-
 # ----
 # main
 # ----
