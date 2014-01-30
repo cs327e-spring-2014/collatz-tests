@@ -1,7 +1,4 @@
-#!/usr/bin/env python3
-
-# -------------------------------
-# projects/collatz/TestCollatz.py
+mes Gu (jg44572)
 # Copyright (C) 2014
 # Glenn P. Downing
 # -------------------------------
@@ -20,7 +17,7 @@ To test the program:
 import io
 import unittest
 
-from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve
+from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve, find_cycle
 
 # -----------
 # TestCollatz
@@ -88,20 +85,37 @@ class TestCollatz (unittest.TestCase) :
         self.assertTrue(v == 174)
     
     def test_eval_5 (self) :
-        v = collatz_eval(1000, 900)
+        v = collatz_eval(1000, 900) # failure case when i > j
         self.assertTrue(v == 174)
     
-    def test_eval_6 (self) :
+    def test_eval_6 (self) : # test corner cases
         v = collatz_eval(2, 2)
         self.assertTrue(v == 2)
 
-    def test_eval_7 (self) :
+    def test_eval_7 (self) : # test corner case
         v = collatz_eval(1, 1)
         self.assertTrue(v == 1)    
 
-    def test_eval_8 (self) :
-        v = collatz_eval(92873, 9797)
-        self.assertTrue(v == 351)
+    def test_eval_8 (self) : # test corner case
+        v = collatz_eval(1000000, 1000000)
+        self.assertTrue(v == 153)
+
+    # ----
+    # find cycle length
+    # ----
+   
+    def test_cycle (self) :
+        v = find_cycle(1)
+        self.assertTrue(v == 1)
+   
+    def test_cycle_2 (self) :
+        v = find_cycle(2)
+        self.assertTrue(v == 2)
+
+    def test_cycle_3 (self) :
+        v = find_cycle(1000000)
+        self.assertTrue(v == 153)
+
 
     # -----
     # print
@@ -112,17 +126,17 @@ class TestCollatz (unittest.TestCase) :
         collatz_print(w, 1, 10, 20)
         self.assertTrue(w.getvalue() == "1 10 20\n")
     
-    def test_print_1 (self) :
+    def test_print_1 (self) : # corner cases
         w = io.StringIO()
         collatz_print(w, 1, 1, 1)
         self.assertTrue(w.getvalue() == "1 1 1\n")
 
-    def test_print_2 (self) :
+    def test_print_2 (self) : 
         w = io.StringIO()
         collatz_print(w, 2, 2, 2)
         self.assertTrue(w.getvalue() == "2 2 2\n")
 
-    def test_print_3 (self) :
+    def test_print_3 (self) : # test when i > j
         w = io.StringIO()
         collatz_print(w, 1000, 900, 174)
         self.assertTrue(w.getvalue() == "1000 900 174\n")
@@ -156,3 +170,5 @@ class TestCollatz (unittest.TestCase) :
 print("TestCollatz.py")
 unittest.main()
 print("Done.")
+
+
