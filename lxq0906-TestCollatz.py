@@ -4,6 +4,7 @@
 # projects/collatz/TestCollatz.py
 # Copyright (C) 2014
 # Glenn P. Downing
+# updated by Xiaoqin LI
 # -------------------------------
 
 """
@@ -22,14 +23,15 @@ import unittest
 
 from Collatz import collatz_read, collatz_eval, collatz_print, collatz_solve
 
-# -----------
-# TestCollatz # no cache at this point
-# -----------
+# ----------------------
+# TestCollatz
+# 23 unit tests in total
+# ----------------------
 
 class TestCollatz (unittest.TestCase) :
-    # ----
-    # read
-    # ----
+    # ---------------------------------------
+    # collatz_read fuction test, 4 in total
+    # ---------------------------------------
 
     def test_read_1 (self) :
         r = io.StringIO("1 10\n")
@@ -57,10 +59,19 @@ class TestCollatz (unittest.TestCase) :
         self.assertTrue(b == True)
         self.assertTrue(i ==  900)
         self.assertTrue(j == 1000)
+        
+    def test_read_4 (self) :
+        r = io.StringIO("1000 900\n")   
+        a = [0, 0]
+        b = collatz_read(r, a)
+        i, j = a
+        self.assertTrue(b == True)
+        self.assertTrue(i == 1000)
+        self.assertTrue(j == 900)
 
-    # ----
-    # eval  
-    # ----
+    # ---------------------------------------
+    # collatz_eval fuction test, 7 in total
+    # ---------------------------------------
 
     def test_eval_1 (self) :
         v = collatz_eval(1, 10)
@@ -77,11 +88,23 @@ class TestCollatz (unittest.TestCase) :
     def test_eval_4 (self) :
         v = collatz_eval(900, 1000)
         self.assertTrue(v == 174)
+      
+    def test_eval_5(self):
+        v = collatz_eval(1, 1000000)     #full range    
+        self.assertTrue(v == 525)
+       	
+    def test_eval_6(self):
+        v = collatz_eval(1000, 900)      #reverse order
+        self.assertTrue(v == 174)
+     
+    def test_eval_7(self):
+        v = collatz_eval(1, 1)
+        self.assertTrue(v == 1)          #same number
 
 
-    # -----
-    # print
-    # -----
+    # --------------------------------------
+    # collatz_print fuction test, 7 in total
+    # --------------------------------------
 
     def test_print_1 (self) :
         w = io.StringIO()
@@ -118,11 +141,17 @@ class TestCollatz (unittest.TestCase) :
         collatz_print(w, 1, 1000000, 525)
         print(w.getvalue())
         self.assertTrue(w.getvalue() == "1 1000000 525\n")
+
+    def test_print_7 (self) :  # reverse order
+        w = io.StringIO()
+        collatz_print(w, 1000, 900, 174)
+        print(w.getvalue())
+        self.assertTrue(w.getvalue() == "1000 900 174\n")
     
 
-    # -----
-    # solve
-    # -----
+    # ---------------------------------------
+    # collatz_solve fuction test, 5 in total
+    # ---------------------------------------
 
     def test_solve_1 (self) :
         r = io.StringIO("1 10\n100 200\n201 210\n900 1000\n")
@@ -141,6 +170,16 @@ class TestCollatz (unittest.TestCase) :
         w = io.StringIO()
         collatz_solve(r, w)
         self.assertTrue(w.getvalue() == "1000 2000 182\n2000 3000 217\n3000 4000 238\n4000 5000 215\n")
+    def test_sovle_4(self) :
+        r = io.StringIO("1000 2000\n2000 3000\n3000 4000\n4000 5000\n")
+        w = io.StringIO()
+        collatz_solve(r, w)
+        self.assertTrue(w.getvalue() == "1000 2000 182\n2000 3000 217\n3000 4000 238\n4000 5000 215\n")
+    def test_sovle_5(self) :
+        r = io.StringIO("2000 1000\n3000 2000\n4000 3000\n5000 4000\n")
+        w = io.StringIO()
+        collatz_solve(r, w)
+        self.assertTrue(w.getvalue() == "2000 1000 182\n3000 2000 217\n4000 3000 238\n5000 4000 215\n")
         print("Done.")
 
 # ----
@@ -148,6 +187,7 @@ class TestCollatz (unittest.TestCase) :
 # ----
 
 print("TestCollatz.py")
+print()
 unittest.main()
 
 

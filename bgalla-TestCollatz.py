@@ -32,7 +32,7 @@ class TestCollatz (unittest.TestCase) :
     # ----
 
     def test_read (self) :
-        r = io.StringIO(unicode("1 10\n"))
+        r = io.StringIO("1 10\n")
         a = [0, 0]
         b = collatz_read(r, a)
         i, j = a
@@ -40,41 +40,14 @@ class TestCollatz (unittest.TestCase) :
         self.assertTrue(i ==  1)
         self.assertTrue(j == 10)
 
-    def test_read_no_newline (self) :
-        r = io.StringIO(unicode("1 10"))
+    def test_read (self) :
+        r = io.StringIO("150 50\n")
         a = [0, 0]
         b = collatz_read(r, a)
         i, j = a
         self.assertTrue(b == True)
-        self.assertTrue(i ==  1)
-        self.assertTrue(j == 10)
-
-    def test_read_extra_space(self) :
-        r = io.StringIO(unicode(" 1  10  "))
-        a = [0, 0]
-        b = collatz_read(r, a)
-        i, j = a
-        self.assertTrue(b == True)
-        self.assertTrue(i ==  1)
-        self.assertTrue(j == 10)
-
-    def test_read_extra_nums(self) :
-        r = io.StringIO(unicode("1 10 30 80"))
-        a = [0, 0]
-        b = collatz_read(r, a)
-        i, j = a
-        self.assertTrue(b == True)
-        self.assertTrue(i ==  1)
-        self.assertTrue(j == 10)
-
-    def test_read_flipped_order(self) :
-        r = io.StringIO(unicode("10 1"))
-        a = [0, 0]
-        b = collatz_read(r, a)
-        i, j = a
-        self.assertTrue(b == True)
-        self.assertTrue(i ==  10)
-        self.assertTrue(j == 1)
+        self.assertTrue(i ==  150)
+        self.assertTrue(j == 50)
 
     # ----
     # eval
@@ -96,12 +69,13 @@ class TestCollatz (unittest.TestCase) :
         v = collatz_eval(900, 1000)
         self.assertTrue(v == 174)
 
-    def test_eval_1num (self):
-        v = collatz_eval(1,1)
-        self.assertTrue(v==1)
-    def test_eval_max(self):
-        v = collatz_eval(1, 1000000)
-        self.assertTrue(v == 525)
+    def test_eval_5 (self) :
+        v = collatz_eval(50, 50)
+        self.assertTrue(v == 25)
+
+    def test_eval_6 (self) :
+        v = collatz_eval(150, 50)
+        self.assertTrue(v == 122)
 
     # -----
     # print
@@ -112,15 +86,36 @@ class TestCollatz (unittest.TestCase) :
         collatz_print(w, 1, 10, 20)
         self.assertTrue(w.getvalue() == "1 10 20\n")
 
+    def test_print_2 (self) :
+        w = io.StringIO()
+        collatz_print(w, 50, 500, 144)
+        self.assertTrue(w.getvalue() == "50 500 144\n")
+
+    def test_print_3 (self) :
+        w = io.StringIO()
+        collatz_print(w, 80, 90, 111)
+        self.assertTrue(w.getvalue() == "80 90 111\n")
+
+    def test_print_4 (self) :
+        w = io.StringIO()
+        collatz_print(w, 150, 50, 122)
+        self.assertTrue(w.getvalue() == "150 50 122\n")
+
     # -----
     # solve
     # -----
 
     def test_solve (self) :
-        r = io.StringIO(unicode("1 10\n100 200\n201 210\n900 1000\n"))
+        r = io.StringIO("1 10\n100 200\n201 210\n900 1000\n")
         w = io.StringIO()
         collatz_solve(r, w)
         self.assertTrue(w.getvalue() == "1 10 20\n100 200 125\n201 210 89\n900 1000 174\n")
+
+    def test_solve (self):
+        r = io.StringIO("50 500\n80 90\n150 50\n")
+        w = io.StringIO()
+        collatz_solve(r, w)
+        self.assertTrue(w.getvalue() == "50 500 144\n80 90 111\n150 50 122\n")
 
 # ----
 # main
