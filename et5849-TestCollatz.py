@@ -47,21 +47,21 @@ class TestCollatz (unittest.TestCase) :
         self.assert_(a[0] == 100)
         self.assert_(a[1] == 200)
     
-    def test_read_2 (self):
-        r = StringIO.StringIO("201 210\n")
+    def test_read_larger_initial_value (self):
+        r = StringIO.StringIO("210 201\n")
         a = [0, 0]
         b = collatz_read(r, a)
         self.assert_(b    == True)
-        self.assert_(a[0] == 201)
-        self.assert_(a[1] == 210)
+        self.assert_(a[0] == 210)
+        self.assert_(a[1] == 201)
 
-    def test_read_3 (self):
-        r = StringIO.StringIO("900 1000\n")
+    def test_read_same_value (self):
+        r = StringIO.StringIO("2 2\n")
         a = [0, 0]
         b = collatz_read(r, a)
         self.assert_(b    == True)
-        self.assert_(a[0] == 900)
-        self.assert_(a[1] == 1000)
+        self.assert_(a[0] == 2)
+        self.assert_(a[1] == 2)
 
     # ----
     # eval
@@ -75,13 +75,13 @@ class TestCollatz (unittest.TestCase) :
         v = collatz_eval(100, 200)
         self.assert_(v == 125)
 
-    def test_eval_3 (self) :
-        v = collatz_eval(201, 210)
+    def test_eval_larger_initial_value (self) :
+        v = collatz_eval(210, 201)
         self.assert_(v == 89)
 
-    def test_eval_4 (self) :
-        v = collatz_eval(900, 1000)
-        self.assert_(v == 174)
+    def test_eval_4_same_value (self) :
+        v = collatz_eval(2, 2)
+        self.assert_(v == 2)
 
     # -----
     # print
@@ -97,15 +97,15 @@ class TestCollatz (unittest.TestCase) :
         collatz_print(w, 100, 200, 125)
         self.assert_(w.getvalue() == "100 200 125\n")
     
-    def test_print_2 (self) :
+    def test_print_larger_initial_value (self) :
         w = StringIO.StringIO()
-        collatz_print(w, 201, 210, 89)
-        self.assert_(w.getvalue() == "201 210 89\n")
+        collatz_print(w, 210, 201, 89)
+        self.assert_(w.getvalue() == "210 201 89\n")
     
-    def test_print_3 (self) : 
+    def test_print_same_value (self) : 
         w = StringIO.StringIO()
-        collatz_print(w, 900, 1000, 174)
-        self.assert_(w.getvalue() == "900 1000 174\n")
+        collatz_print(w, 2, 2, 2)
+        self.assert_(w.getvalue() == "2 2 2\n")
 
     # -----
     # solve
@@ -117,17 +117,17 @@ class TestCollatz (unittest.TestCase) :
         collatz_solve(r, w)
         self.assert_(w.getvalue() == "1 10 20\n100 200 125\n201 210 89\n900 1000 174\n")
 
-    def test_solve_1 (self) :
-        r = StringIO.StringIO("731 75\n174 384\n998 469\n875 729\n")
+    def test_solve_1_larger_initial_values (self) :
+        r = StringIO.StringIO("731 75\n384 174\n998 469\n875 729\n")
         w = StringIO.StringIO()
         collatz_solve(r, w)
-        self.assert_(w.getvalue() == "731 75 171\n174 384 144\n998 469 179\n875 729 179\n")
+        self.assert_(w.getvalue() == "731 75 171\n384 174 144\n998 469 179\n875 729 179\n")
  
-    def test_solve_2 (self) :
-        r = StringIO.StringIO("695 655\n110 482\n451 997\n659 215\n")
+    def test_solve_2_with_same_value (self) :
+        r = StringIO.StringIO("1 1\n110 482\n451 997\n659 215\n")
         w = StringIO.StringIO()
         collatz_solve(r, w)
-        self.assert_(w.getvalue() == "695 655 145\n110 482 144\n451 997 179\n659 215 145\n")
+        self.assert_(w.getvalue() == "1 1 1\n110 482 144\n451 997 179\n659 215 145\n")
 
     def test_solve_3 (self) :
         r = StringIO.StringIO("1 812\n739 812\n869 374\n506 95\n")
