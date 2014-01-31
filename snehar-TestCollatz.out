@@ -1,0 +1,15 @@
+TestCollatz.py
+...................
+----------------------------------------------------------------------
+Ran 19 tests in 11.596s
+
+OK
+Traceback (most recent call last):
+  File "C:/Python27/CS327E/cs327e-collatz/TestCollatz", line 166, in <module>
+    unittest.main()
+  File "C:\Python32\lib\unittest\main.py", line 124, in __init__
+    self.runTests()
+  File "C:\Python32\lib\unittest\main.py", line 272, in runTests
+    sys.exit(not self.result.wasSuccessful())
+SystemExit: False
+
