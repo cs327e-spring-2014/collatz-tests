@@ -1,0 +1,7 @@
+austin-pc:cs327e-collatz stin2011$ python3 TestCollatz.py
+TestCollatz.py
+.............
+----------------------------------------------------------------------
+Ran 13 tests in 0.009s
+
+OK
